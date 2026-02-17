@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 from datetime import datetime
+from pathlib import Path
 from threading import Lock
 from typing import Dict, Iterable, List
 from uuid import uuid4
@@ -22,9 +24,32 @@ from .services.qc_service import parse_and_qc
 
 
 class TaskStore:
-    def __init__(self) -> None:
+    def __init__(self, db_file: str = "tasks.json") -> None:
         self._tasks: Dict[str, Task] = {}
         self._lock = Lock()
+        self._db_file = Path(db_file)
+        self._load_from_disk()
+
+    def _load_from_disk(self) -> None:
+        """从文件加载任务数据"""
+        if self._db_file.exists():
+            try:
+                with open(self._db_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    for task_dict in data:
+                        task = Task(**task_dict)
+                        self._tasks[task.id] = task
+            except Exception as e:
+                print(f"加载任务数据失败: {e}")
+
+    def _save_to_disk(self) -> None:
+        """保存任务数据到文件"""
+        try:
+            with open(self._db_file, "w", encoding="utf-8") as f:
+                data = [task.model_dump() for task in self._tasks.values()]
+                json.dump(data, f, ensure_ascii=False, indent=2, default=str)
+        except Exception as e:
+            print(f"保存任务数据失败: {e}")
 
     def list_tasks(self) -> List[Task]:
         return list(self._tasks.values())
@@ -42,6 +67,7 @@ class TaskStore:
                 )
                 self._tasks[task_id] = task
                 new_tasks.append(task)
+            self._save_to_disk()
             return new_tasks
 
     def get_task(self, task_id: str) -> Task:
@@ -55,6 +81,7 @@ class TaskStore:
             task = self.get_task(task_id)
             if task.status == TaskStatus.NEW:
                 task.status = TaskStatus.IN_PROGRESS
+            self._save_to_disk()
             return task
 
     def submit_annotation(self, task_id: str, payload: SubmitRequest) -> Task:
@@ -74,6 +101,7 @@ class TaskStore:
             )
             task.annotation = annotation
             task.status = TaskStatus.SUBMITTED
+            self._save_to_disk()
             return task
 
     def review_task(self, task_id: str, payload: ReviewRequest) -> Task:
@@ -89,6 +117,7 @@ class TaskStore:
             )
             task.review = review
             task.status = payload.decision
+            self._save_to_disk()
             return task
 
     def export(self, fmt: str) -> str:
@@ -116,6 +145,10 @@ class TaskStore:
         raise ValueError("unsupported export format")
 
     def seed(self, seeds: Iterable[TaskSeed]) -> None:
+        # 如果已经有数据，不重新seed
+        if self._tasks:
+            print(f"已有 {len(self._tasks)} 个任务，跳过seed")
+            return
         request = TaskCreateRequest(items=list(seeds))
         self.create_tasks(request)
 

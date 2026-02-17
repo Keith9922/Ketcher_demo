@@ -5,9 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>分子标注 Demo</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module" crossorigin src="/assets/index-Dbhk7aO0.js"></script>
+    <script type="module" crossorigin src="/assets/index-Bb1bZQ9U.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/chakra-zZ4ayPLF.js">
     <link rel="stylesheet" crossorigin href="/assets/index-B89TpDO-.css">
-  </head>
+  <script>
+          // Polyfill for require and other Node.js globals
+          (function() {
+            if (typeof window !== 'undefined') {
+              // Define require if not present
+              if (typeof window.require === 'undefined') {
+                window.require = function(module) {
+                  console.warn('require() called in browser for module:', module);
+                  return {};
+                };
+              }
+              
+              // Ensure global is defined
+              if (typeof window.global === 'undefined') {
+                window.global = window;
+              }
+              
+              // Ensure process is defined
+              if (typeof window.process === 'undefined') {
+                window.process = { env: {} };
+              }
+            }
+          })();
+        </script>
+        </head>
   <body>
     <div id="root"></div>
   </body>

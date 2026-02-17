@@ -29,6 +29,13 @@ async def lifespan(_: FastAPI):
         TaskSeed(title="Mol-0001", source_smiles="CCO"),
         TaskSeed(title="Mol-0002", source_smiles="c1ccccc1"),
         TaskSeed(title="Mol-0003", source_smiles="C1CCCCC1"),
+        TaskSeed(title="Mol-0004", source_smiles="CC(C)O"),
+        TaskSeed(title="Mol-0005", source_smiles="C1=CC=C(C=C1)O"),
+        TaskSeed(title="Mol-0006", source_smiles="CC(=O)O"),
+        TaskSeed(title="Mol-0007", source_smiles="C1CCCNC1"),
+        TaskSeed(title="Mol-0008", source_smiles="CC(C)(C)O"),
+        TaskSeed(title="Mol-0009", source_smiles="c1ccc2ccccc2c1"),
+        TaskSeed(title="Mol-0010", source_smiles="CC(=O)C"),
     ]
     store.seed(seeds)
     yield
@@ -38,7 +45,8 @@ app = FastAPI(title="分子标注 Demo", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8888", "http://127.0.0.1:8888"],
+    allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

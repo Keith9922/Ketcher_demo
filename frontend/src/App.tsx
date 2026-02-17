@@ -12,10 +12,24 @@ import {
   Text,
   Textarea,
   useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  OrderedList,
+  ListItem,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
-import { apiClient } from "./api/client";
 import { Task, TaskStatus } from "./types";
 import { KetcherEditor } from "./components/KetcherEditor";
+import { storageService } from "./utils/storage";
 
 const statusScheme: Record<TaskStatus, string> = {
   NEW: "gray",
@@ -30,16 +44,11 @@ function getStatusLabel(status: TaskStatus) {
 }
 
 const defaultSmiles = "CCO";
-const demoTasks: Task[] = [
-  { id: "demo-1", title: "Mol-0001", status: "NEW", source: { smiles: "CCO" } },
-  { id: "demo-2", title: "Mol-0002", status: "NEW", source: { smiles: "c1ccccc1" } },
-];
-const backendEnabled = import.meta.env.VITE_ENABLE_BACKEND !== "false";
 
 function App() {
   const toast = useToast();
-  const [tasks, setTasks] = useState<Task[]>(backendEnabled ? [] : demoTasks);
-  const [apiUnavailable, setApiUnavailable] = useState(!backendEnabled);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [editorSmiles, setEditorSmiles] = useState(defaultSmiles);
   const [annotator, setAnnotator] = useState("alice");
@@ -48,13 +57,22 @@ function App() {
   const [decision, setDecision] = useState<TaskStatus>("APPROVED");
   const [busy, setBusy] = useState(false);
 
+  // 初始化：从 LocalStorage 加载数据
   useEffect(() => {
-    if (!backendEnabled) {
-      setApiUnavailable(true);
-      setTasks((prev) => (prev.length ? prev : demoTasks));
-      return;
+    const savedTasks = storageService.getTasks();
+    if (savedTasks.length === 0) {
+      // 如果没有数据，初始化演示数据
+      const demoTasks = storageService.initDemoData();
+      setTasks(demoTasks);
+      toast({
+        status: "info",
+        title: "已初始化演示数据",
+        description: "数据保存在浏览器本地存储中",
+        duration: 3000,
+      });
+    } else {
+      setTasks(savedTasks);
     }
-    void refreshTasks();
   }, []);
 
   useEffect(() => {
@@ -71,165 +89,181 @@ function App() {
   }, [selectedId, tasks]);
 
   useEffect(() => {
-    if (selectedTask?.source?.smiles) {
-      setEditorSmiles(selectedTask.source.smiles);
+    if (selectedTask) {
+      // 如果任务已有标注，显示标注的SMILES；否则显示源SMILES
+      const displaySmiles = selectedTask.annotation?.smiles || selectedTask.source?.smiles || "";
+      setEditorSmiles(displaySmiles);
     }
-  }, [selectedTask?.id, selectedTask?.source?.smiles]);
+  }, [selectedTask?.id, selectedTask?.source?.smiles, selectedTask?.annotation?.smiles]);
 
   const warnings = useMemo(() => selectedTask?.annotation?.qc.warnings ?? [], [selectedTask]);
 
-  const refreshTasks = async () => {
-    if (!backendEnabled) {
-      setApiUnavailable(true);
-      setTasks((prev) => (prev.length ? prev : demoTasks));
-      return;
-    }
-    try {
-      const response = await apiClient.get<Task[]>("/api/tasks");
-      setTasks(response.data);
-      setApiUnavailable(false);
-    } catch (error) {
-      setApiUnavailable(true);
-      setTasks((prev) => (prev.length ? prev : demoTasks));
-      toast({
-        status: "warning",
-        title: "后端未连接",
-        description: "请先启动后端服务：uvicorn backend.app.main:app --reload --port 8000（或继续本地演示模式）",
-      });
-    }
+  // 保存任务到 LocalStorage
+  const saveTasks = (newTasks: Task[]) => {
+    setTasks(newTasks);
+    storageService.saveTasks(newTasks);
+  };
+
+  // 刷新任务列表
+  const refreshTasks = () => {
+    const savedTasks = storageService.getTasks();
+    setTasks(savedTasks);
   };
 
   const updateLocalTask = (updater: (task: Task) => Task) => {
     if (!selectedTask) {
       return;
     }
-    setTasks((prev) => prev.map((task) => (task.id === selectedTask.id ? updater(task) : task)));
+    const newTasks = tasks.map((task) => (task.id === selectedTask.id ? updater(task) : task));
+    saveTasks(newTasks);
   };
 
-  const handleClaim = async () => {
+  const handleClaim = () => {
     if (!selectedTask) return;
-    if (!backendEnabled || apiUnavailable) {
-      updateLocalTask((task) => ({ ...task, status: "IN_PROGRESS" }));
-      toast({ status: "info", title: "演示模式：任务状态已更新为 IN_PROGRESS" });
-      return;
-    }
-    setBusy(true);
-    try {
-      await apiClient.post(`/api/tasks/${selectedTask.id}/claim`, { user: annotator });
-      await refreshTasks();
-      toast({ status: "success", title: "任务已领取" });
-    } catch (error) {
-      toast({ status: "error", title: "领取失败" });
-    } finally {
-      setBusy(false);
-    }
+    updateLocalTask((task) => ({ ...task, status: "IN_PROGRESS" }));
+    toast({ status: "success", title: "任务已领取" });
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!selectedTask) return;
-    if (!backendEnabled || apiUnavailable) {
-      const nextSmiles = (editorSmiles || selectedTask.source.smiles || "").trim();
-      const warningsLocal = nextSmiles ? [] : ["结构为空"];
-      updateLocalTask((task) => ({
-        ...task,
-        status: "SUBMITTED",
-        annotation: {
-          annotator,
-          smiles: nextSmiles,
-          canonical_smiles: nextSmiles,
-          qc: {
-            rdkit_parse_ok: warningsLocal.length === 0,
-            sanitize_ok: warningsLocal.length === 0,
-            warnings: warningsLocal,
-          },
-          submitted_at: new Date().toISOString(),
-        },
-      }));
-      toast({ status: "info", title: "演示模式：标注已提交" });
-      return;
-    }
-    setBusy(true);
-    try {
-      await apiClient.post(`/api/tasks/${selectedTask.id}/submit`, {
+    const nextSmiles = (editorSmiles || selectedTask.source.smiles || "").trim();
+    const warningsLocal = nextSmiles ? [] : ["结构为空"];
+    updateLocalTask((task) => ({
+      ...task,
+      status: "SUBMITTED",
+      annotation: {
         annotator,
-        smiles: editorSmiles || selectedTask.source.smiles,
-      });
-      await refreshTasks();
-      toast({ status: "success", title: "标注提交成功" });
-    } catch (error) {
-      toast({ status: "error", title: "提交失败" });
-    } finally {
-      setBusy(false);
-    }
+        smiles: nextSmiles,
+        canonical_smiles: nextSmiles,
+        mol: undefined,
+        molblock: undefined,
+        qc: {
+          rdkit_parse_ok: warningsLocal.length === 0,
+          sanitize_ok: warningsLocal.length === 0,
+          warnings: warningsLocal,
+        },
+        submitted_at: new Date().toISOString(),
+      },
+    }));
+    toast({ status: "success", title: "标注已提交" });
   };
 
-  const handleReview = async () => {
+  const handleReview = () => {
     if (!selectedTask) return;
-    if (!backendEnabled || apiUnavailable) {
-      updateLocalTask((task) => ({
-        ...task,
-        status: decision,
-        review: {
-          reviewer,
-          decision,
-          comment,
-          reviewed_at: new Date().toISOString(),
-        },
-      }));
-      toast({ status: "info", title: `演示模式：任务已更新为 ${decision}` });
-      return;
-    }
-    setBusy(true);
-    try {
-      await apiClient.post(`/api/tasks/${selectedTask.id}/review`, {
+    updateLocalTask((task) => ({
+      ...task,
+      status: decision,
+      review: {
         reviewer,
         decision,
         comment,
-      });
-      await refreshTasks();
-      toast({ status: "success", title: "审阅完成" });
-    } catch (error) {
-      toast({ status: "error", title: "审阅失败" });
-    } finally {
-      setBusy(false);
-    }
+        reviewed_at: new Date().toISOString(),
+      },
+    }));
+    toast({ status: "success", title: "审阅完成" });
   };
 
-  const handleExport = async (format: "smiles" | "csv" | "sdf") => {
-    if (apiUnavailable) {
-      toast({ status: "warning", title: "后端未连接，无法导出" });
+  const handleExport = (format: "smiles" | "csv" | "sdf") => {
+    const approved = tasks.filter((t) => t.status === "APPROVED");
+    if (approved.length === 0) {
+      toast({ status: "warning", title: "没有已通过的任务" });
       return;
     }
-    try {
-      const response = await apiClient.get<string>("/api/export", {
-        params: { format },
-        responseType: "text",
+
+    let content = "";
+    let filename = `molecules.${format}`;
+    let mimeType = "text/plain";
+
+    if (format === "smiles") {
+      content = approved.map((t) => t.annotation?.canonical_smiles || t.source.smiles || "").join("\n");
+    } else if (format === "csv") {
+      mimeType = "text/csv";
+      const headers = "id,title,canonical_smiles,qc_warnings,review_comment,reviewed_at";
+      const rows = approved.map((t) => {
+        const canonical = t.annotation?.canonical_smiles || "";
+        const warnings = t.annotation?.qc.warnings.join(";") || "";
+        const comment = t.review?.comment || "";
+        const reviewedAt = t.review?.reviewed_at || "";
+        return `${t.id},${t.title},${canonical},${warnings},${comment},${reviewedAt}`;
       });
-      const blob = new Blob([response.data], { type: response.headers["content-type"] });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `molecules.${format}`;
-      anchor.click();
-      URL.revokeObjectURL(url);
-      toast({ status: "success", title: `已导出 ${format}` });
-    } catch (error) {
-      toast({ status: "error", title: "导出失败" });
+      content = [headers, ...rows].join("\n");
+    } else if (format === "sdf") {
+      mimeType = "chemical/x-mdl-sdfile";
+      content = "SDF export not implemented in browser mode";
     }
+
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    URL.revokeObjectURL(url);
+    toast({ status: "success", title: `已导出 ${format.toUpperCase()} 格式` });
   };
 
   return (
     <Container maxW="8xl" py={6}>
-      <Heading size="lg" mb={6}>
-        分子标注 Demo
-      </Heading>
-      {apiUnavailable ? (
-        <Box mb={4} borderWidth={1} borderRadius="md" p={3} borderColor="orange.300" bg="orange.50">
-          <Text fontSize="sm" color="orange.700">
-            当前处于本地演示模式（未连接后端）。如需联调，请启动 `uvicorn backend.app.main:app --reload --port 8000` 并设置 `VITE_ENABLE_BACKEND=true`。
-          </Text>
-        </Box>
-      ) : null}
+      <Flex justify="space-between" align="center" mb={6}>
+        <Heading size="lg">分子标注 Demo</Heading>
+        <Button colorScheme="blue" size="sm" onClick={onOpen}>
+          📖 操作说明
+        </Button>
+      </Flex>
+
+      <Modal isOpen={isOpen} onClose={onClose} size="xl">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>操作说明</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <Box mb={4}>
+              <Text fontWeight="bold" mb={2} color="blue.600">
+                👤 标注人员工作流程：
+              </Text>
+              <OrderedList spacing={2} pl={4}>
+                <ListItem>切换到「👨‍💻 标注工作台」标签页</ListItem>
+                <ListItem>从左侧任务列表中选择状态为 <Badge colorScheme="gray">NEW</Badge> 的任务</ListItem>
+                <ListItem>输入标注人员姓名（默认 alice）</ListItem>
+                <ListItem>点击「领取任务」，任务状态变为 <Badge colorScheme="blue">IN PROGRESS</Badge></ListItem>
+                <ListItem>在 Ketcher 编辑器中绘制或修改分子结构</ListItem>
+                <ListItem>点击「提交标注」，系统自动进行 QC 检查</ListItem>
+                <ListItem>任务状态变为 <Badge colorScheme="orange">SUBMITTED</Badge>，等待审阅</ListItem>
+              </OrderedList>
+            </Box>
+
+            <Box mb={4}>
+              <Text fontWeight="bold" mb={2} color="purple.600">
+                👨‍⚖️ 审阅人员工作流程：
+              </Text>
+              <OrderedList spacing={2} pl={4}>
+                <ListItem>切换到「👨‍⚖️ 审阅工作台」标签页</ListItem>
+                <ListItem>从左侧任务列表中选择状态为 <Badge colorScheme="orange">SUBMITTED</Badge> 的任务</ListItem>
+                <ListItem>输入审阅者姓名（默认 bob）</ListItem>
+                <ListItem>查看分子结构、标注信息和 QC 状态（编辑器为只读）</ListItem>
+                <ListItem>填写审阅意见（可选）</ListItem>
+                <ListItem>选择「✅ 通过」或「❌ 退回」</ListItem>
+                <ListItem>点击「提交审阅」完成审阅</ListItem>
+              </OrderedList>
+            </Box>
+
+            <Box borderWidth={1} borderRadius="md" p={3} bg="yellow.50" borderColor="yellow.200">
+              <Text fontSize="sm" fontWeight="bold" mb={1}>
+                💡 提示：
+              </Text>
+              <Text fontSize="sm">
+                • 标注和审阅工作台分开，互不干扰
+                <br />
+                • 完成操作后，任务列表会自动刷新显示最新状态
+                <br />
+                • QC 警告会实时显示在右侧面板
+                <br />
+                • 已通过的任务可通过「导出」功能下载为 SMILES/CSV/SDF 格式
+              </Text>
+            </Box>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
       <Grid templateColumns={{ base: "1fr", xl: "320px minmax(0, 1fr)" }} gap={6}>
         <Box borderWidth={1} borderRadius="lg" p={4} maxH="md" overflowY="auto">
           <Flex justify="space-between" mb={4} align="center">
@@ -262,73 +296,178 @@ function App() {
         </Box>
 
         <Box borderWidth={1} borderRadius="lg" p={4}>
-          <Flex justify="space-between" mb={4}>
-            <Text fontSize="md" fontWeight="bold">
-              标注磁贴
-            </Text>
-            <Badge colorScheme={selectedTask ? statusScheme[selectedTask.status] : "gray"}>
-              {selectedTask ? getStatusLabel(selectedTask.status) : "未选任务"}
-            </Badge>
-          </Flex>
-          <Flex gap={4} flexDir={{ base: "column", lg: "row" }}>
-            <Box flex={1}>
-              <KetcherEditor
-                key={selectedTask?.id ?? "ketcher-editor"}
-                smiles={editorSmiles}
-                onChange={setEditorSmiles}
-                height="600px"
-              />
-            </Box>
-            <Box w={{ base: "100%", lg: "300px" }}>
-              <Stack spacing={3}>
-                <Input placeholder="标注人员" value={annotator} onChange={(event) => setAnnotator(event.target.value)} />
-                <Button colorScheme="blue" onClick={handleClaim} isDisabled={!selectedTask || selectedTask.status !== "NEW"} isLoading={busy}>
-                  领取任务
-                </Button>
-                <Button colorScheme="green" onClick={handleSubmit} isDisabled={!selectedTask} isLoading={busy}>
-                  提交标注
-                </Button>
-                <Box borderWidth={1} borderRadius="md" p={2}>
-                  <Text fontSize="sm" fontWeight="semibold" mb={1}>
-                    QC 警告
+          <Tabs colorScheme="blue">
+            <TabList mb={4}>
+              <Tab>
+                <Text fontWeight="bold">👨‍💻 标注工作台</Text>
+              </Tab>
+              <Tab>
+                <Text fontWeight="bold">👨‍⚖️ 审阅工作台</Text>
+              </Tab>
+            </TabList>
+
+            <TabPanels>
+              {/* 标注工作台 */}
+              <TabPanel p={0}>
+                <Flex justify="space-between" mb={4}>
+                  <Text fontSize="md" fontWeight="bold">
+                    当前任务
                   </Text>
-                  {warnings.length === 0 ? (
-                    <Text fontSize="sm" color="green.500">
-                      当前没有警告。
-                    </Text>
-                  ) : (
-                    <Stack spacing={1}>
-                      {warnings.map((warning) => (
-                        <Badge key={warning} colorScheme="orange">
-                          {warning}
-                        </Badge>
-                      ))}
+                  <Badge colorScheme={selectedTask ? statusScheme[selectedTask.status] : "gray"}>
+                    {selectedTask ? getStatusLabel(selectedTask.status) : "未选任务"}
+                  </Badge>
+                </Flex>
+                <Flex gap={4} flexDir={{ base: "column", lg: "row" }}>
+                  <Box flex={1}>
+                    <KetcherEditor
+                      key={`annotate-${selectedTask?.id}-${selectedTask?.annotation?.smiles || "new"}`}
+                      smiles={editorSmiles}
+                      onChange={setEditorSmiles}
+                      height="600px"
+                    />
+                  </Box>
+                  <Box w={{ base: "100%", lg: "300px" }}>
+                    <Stack spacing={3}>
+                      <Input placeholder="标注人员" value={annotator} onChange={(event) => setAnnotator(event.target.value)} />
+                      <Button colorScheme="blue" onClick={handleClaim} isDisabled={!selectedTask || selectedTask.status !== "NEW"} isLoading={busy}>
+                        领取任务
+                      </Button>
+                      <Button colorScheme="green" onClick={handleSubmit} isDisabled={!selectedTask} isLoading={busy}>
+                        提交标注
+                      </Button>
+                      <Box borderWidth={1} borderRadius="md" p={2}>
+                        <Text fontSize="sm" fontWeight="semibold" mb={1}>
+                          QC 警告
+                        </Text>
+                        {warnings.length === 0 ? (
+                          <Text fontSize="sm" color="green.500">
+                            当前没有警告。
+                          </Text>
+                        ) : (
+                          <Stack spacing={1}>
+                            {warnings.map((warning) => (
+                              <Badge key={warning} colorScheme="orange">
+                                {warning}
+                              </Badge>
+                            ))}
+                          </Stack>
+                        )}
+                      </Box>
+                      {selectedTask?.annotation && (
+                        <Box borderWidth={1} borderRadius="md" p={2} bg="blue.50">
+                          <Text fontSize="sm" fontWeight="semibold" mb={1}>
+                            标注信息
+                          </Text>
+                          <Text fontSize="xs">标注人：{selectedTask.annotation.annotator}</Text>
+                          <Text fontSize="xs">提交时间：{new Date(selectedTask.annotation.submitted_at).toLocaleString()}</Text>
+                        </Box>
+                      )}
                     </Stack>
-                  )}
-                </Box>
-              </Stack>
-            </Box>
-          </Flex>
-          <Box mt={4}>
-            <Text fontWeight="bold" mb={2}>
-              审阅面板
-            </Text>
-            <Stack spacing={3}>
-              <Input placeholder="审阅者" value={reviewer} onChange={(event) => setReviewer(event.target.value)} />
-              <Textarea placeholder="审阅意见" value={comment} onChange={(event) => setComment(event.target.value)} />
-              <Flex gap={2}>
-                <Button variant={decision === "APPROVED" ? "solid" : "outline"} colorScheme="green" onClick={() => setDecision("APPROVED")}>
-                  通过
-                </Button>
-                <Button variant={decision === "REJECTED" ? "solid" : "outline"} colorScheme="red" onClick={() => setDecision("REJECTED")}>
-                  退回
-                </Button>
-                <Button colorScheme="purple" onClick={handleReview} isLoading={busy}>
-                  提交审阅
-                </Button>
-              </Flex>
-            </Stack>
-          </Box>
+                  </Box>
+                </Flex>
+              </TabPanel>
+
+              {/* 审阅工作台 */}
+              <TabPanel p={0}>
+                <Flex justify="space-between" mb={4}>
+                  <Text fontSize="md" fontWeight="bold">
+                    待审阅任务
+                  </Text>
+                  <Badge colorScheme={selectedTask ? statusScheme[selectedTask.status] : "gray"}>
+                    {selectedTask ? getStatusLabel(selectedTask.status) : "未选任务"}
+                  </Badge>
+                </Flex>
+                <Flex gap={4} flexDir={{ base: "column", lg: "row" }}>
+                  <Box flex={1}>
+                    <KetcherEditor
+                      key={`review-${selectedTask?.id}-${selectedTask?.annotation?.smiles || "empty"}`}
+                      smiles={selectedTask?.annotation?.smiles || selectedTask?.source?.smiles || ""}
+                      onChange={() => {}}
+                      height="600px"
+                    />
+                    <Text fontSize="sm" color="gray.500" mt={2}>
+                      💡 审阅模式下编辑器为只读，仅供查看
+                    </Text>
+                  </Box>
+                  <Box w={{ base: "100%", lg: "300px" }}>
+                    <Stack spacing={3}>
+                      {selectedTask?.annotation && (
+                        <Box borderWidth={1} borderRadius="md" p={3} bg="gray.50">
+                          <Text fontSize="sm" fontWeight="semibold" mb={2}>
+                            标注信息
+                          </Text>
+                          <Text fontSize="xs" mb={1}>标注人：{selectedTask.annotation.annotator}</Text>
+                          <Text fontSize="xs" mb={1}>提交时间：{new Date(selectedTask.annotation.submitted_at).toLocaleString()}</Text>
+                          <Text fontSize="xs" mb={1}>SMILES：{selectedTask.annotation.smiles}</Text>
+                          <Box mt={2}>
+                            <Text fontSize="xs" fontWeight="semibold">QC 状态：</Text>
+                            <Text fontSize="xs">解析成功：{selectedTask.annotation.qc.rdkit_parse_ok ? "✅" : "❌"}</Text>
+                            <Text fontSize="xs">验证通过：{selectedTask.annotation.qc.sanitize_ok ? "✅" : "❌"}</Text>
+                            {selectedTask.annotation.qc.warnings.length > 0 && (
+                              <Box mt={1}>
+                                <Text fontSize="xs" fontWeight="semibold">警告：</Text>
+                                {selectedTask.annotation.qc.warnings.map((w) => (
+                                  <Badge key={w} colorScheme="orange" size="sm" mr={1}>
+                                    {w}
+                                  </Badge>
+                                ))}
+                              </Box>
+                            )}
+                          </Box>
+                        </Box>
+                      )}
+                      <Input placeholder="审阅者" value={reviewer} onChange={(event) => setReviewer(event.target.value)} />
+                      <Textarea placeholder="审阅意见（可选）" value={comment} onChange={(event) => setComment(event.target.value)} rows={4} />
+                      <Flex gap={2}>
+                        <Button
+                          flex={1}
+                          variant={decision === "APPROVED" ? "solid" : "outline"}
+                          colorScheme="green"
+                          onClick={() => setDecision("APPROVED")}
+                        >
+                          ✅ 通过
+                        </Button>
+                        <Button
+                          flex={1}
+                          variant={decision === "REJECTED" ? "solid" : "outline"}
+                          colorScheme="red"
+                          onClick={() => setDecision("REJECTED")}
+                        >
+                          ❌ 退回
+                        </Button>
+                      </Flex>
+                      <Button
+                        colorScheme="purple"
+                        onClick={handleReview}
+                        isDisabled={!selectedTask || selectedTask.status !== "SUBMITTED"}
+                        isLoading={busy}
+                        size="lg"
+                      >
+                        提交审阅
+                      </Button>
+                      {selectedTask?.review && (
+                        <Box borderWidth={1} borderRadius="md" p={3} bg="purple.50">
+                          <Text fontSize="sm" fontWeight="semibold" mb={2}>
+                            审阅记录
+                          </Text>
+                          <Text fontSize="xs" mb={1}>审阅人：{selectedTask.review.reviewer}</Text>
+                          <Text fontSize="xs" mb={1}>决策：
+                            <Badge colorScheme={selectedTask.review.decision === "APPROVED" ? "green" : "red"} ml={1}>
+                              {selectedTask.review.decision}
+                            </Badge>
+                          </Text>
+                          <Text fontSize="xs" mb={1}>时间：{new Date(selectedTask.review.reviewed_at).toLocaleString()}</Text>
+                          {selectedTask.review.comment && (
+                            <Text fontSize="xs" mt={2}>意见：{selectedTask.review.comment}</Text>
+                          )}
+                        </Box>
+                      )}
+                    </Stack>
+                  </Box>
+                </Flex>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
       </Grid>
       <Box mt={6} borderWidth={1} borderRadius="lg" p={4}>

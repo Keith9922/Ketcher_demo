@@ -1,0 +1,186 @@
+[
+  {
+    "id": "task_ee63be43",
+    "title": "Mol-0001",
+    "status": "SUBMITTED",
+    "source": {
+      "smiles": "CCO",
+      "mol": null
+    },
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CCO",
+      "mol": null,
+      "canonical_smiles": "CCO",
+      "molblock": "\n     RDKit          2D\n\n  3  2  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    2.5981   -0.0000    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\n  2  3  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 18:15:04.869930"
+    },
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_1cf2e851",
+    "title": "Mol-0002",
+    "status": "SUBMITTED",
+    "source": {
+      "smiles": "c1ccccc1",
+      "mol": null
+    },
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "c1ccccc1",
+      "mol": null,
+      "canonical_smiles": "c1ccccc1",
+      "molblock": "\n     RDKit          2D\n\n  6  6  0  0  0  0  0  0  0  0999 V2000\n    1.5000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7500   -1.2990    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7500   -1.2990    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -1.5000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n   -0.7500    1.2990    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    0.7500    1.2990    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  2  0\n  2  3  1  0\n  3  4  2  0\n  4  5  1  0\n  5  6  2  0\n  6  1  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 18:16:31.403613"
+    },
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_fbe30ce2",
+    "title": "Mol-0003",
+    "status": "NEW",
+    "source": {
+      "smiles": "C1CCCCC1",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_78978d9a",
+    "title": "Mol-0004",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(C)O",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_494566f0",
+    "title": "Mol-0005",
+    "status": "NEW",
+    "source": {
+      "smiles": "C1=CC=C(C=C1)O",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_7a495f77",
+    "title": "Mol-0006",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(=O)O",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_4579b626",
+    "title": "Mol-0007",
+    "status": "NEW",
+    "source": {
+      "smiles": "C1CCCNC1",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_0a8901bd",
+    "title": "Mol-0008",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(C)(C)O",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_e94540b1",
+    "title": "Mol-0009",
+    "status": "NEW",
+    "source": {
+      "smiles": "c1ccc2ccccc2c1",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_2942eac2",
+    "title": "Mol-0010",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(=O)C",
+      "mol": null
+    },
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  }
+]

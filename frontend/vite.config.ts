@@ -1,8 +1,9 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { requirePolyfillPlugin } from "./vite-plugin-require-polyfill";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), requirePolyfillPlugin()],
   optimizeDeps: {
     include: [
       "ketcher-react",
@@ -25,11 +26,18 @@ export default defineConfig({
     global: "globalThis",
   },
   server: {
-    port: 8888,
+    host: "0.0.0.0",
+    port: 50002,
     strictPort: true,
+    allowedHosts: [
+      "axjj1426074.bohrium.tech",
+      "localhost",
+      "127.0.0.1",
+      "10.5.96.31"
+    ],
     proxy: {
       "/api": {
-        target: "http://localhost:8000",
+        target: "http://localhost:50001",
         changeOrigin: true,
       },
       "/ketcher": {
@@ -41,5 +49,13 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          chakra: ['@chakra-ui/react', '@emotion/react', '@emotion/styled'],
+        },
+      },
+    },
   },
 });

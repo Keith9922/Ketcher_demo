@@ -101,16 +101,19 @@ export const KetcherEditor: React.FC<KetcherEditorProps> = ({ smiles, onChange, 
         }
       }
 
-      for (let attempt = 0; attempt < 3; attempt += 1) {
+      // 增加重试次数和延迟时间
+      for (let attempt = 0; attempt < 5; attempt += 1) {
         try {
           await ketcher.setMolecule(structure);
+          console.log(`Ketcher 成功加载分子结构（尝试 ${attempt + 1}）`);
           return;
         } catch (error) {
-          if (attempt === 2) {
+          if (attempt === 4) {
             console.error("Ketcher setMolecule 失败", error);
             return;
           }
-          await new Promise((resolve) => setTimeout(resolve, 80));
+          // 增加延迟时间，从80ms改为150ms
+          await new Promise((resolve) => setTimeout(resolve, 150));
         }
       }
     },
@@ -143,10 +146,11 @@ export const KetcherEditor: React.FC<KetcherEditorProps> = ({ smiles, onChange, 
       window.clearTimeout(hydrateTimerRef.current);
     }
     if (smiles) {
+      // 增加初始化延迟，等待Ketcher完全启动
       hydrateTimerRef.current = window.setTimeout(() => {
         if (activeKetcherRef.current !== ketcher) return;
         void hydrateMolecule(ketcher, smiles);
-      }, 30);
+      }, 100);
     }
     const handler = async () => {
       try {

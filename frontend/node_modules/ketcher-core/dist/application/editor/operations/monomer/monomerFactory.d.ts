@@ -1,0 +1,21 @@
+import { BaseMonomerRenderer } from "../../../render/renderers";
+import { MonomerOrAmbiguousType } from "../../../../domain/types";
+import { Chem, Peptide, Phosphate, RNABase, Sugar } from "../../../../domain/entities";
+import { KetMonomerClass } from "../../../formatters/types/ket";
+declare type DerivedClass<T> = new (...args: unknown[]) => T;
+export declare const MONOMER_CONST: {
+    AMINO_ACID: string;
+    PEPTIDE: string;
+    CHEM: string;
+    RNA: string;
+    DNA: string;
+    MODDNA: string;
+    R: string;
+    P: string;
+    SUGAR: string;
+    BASE: string;
+    PHOSPHATE: string;
+};
+declare type Monomer = typeof Chem | typeof Sugar | typeof Peptide | typeof RNABase | typeof Phosphate;
+export declare const monomerFactory: (monomer: MonomerOrAmbiguousType) => [Monomer: Monomer, MonomerRenderer: DerivedClass<BaseMonomerRenderer>, ketMonomerClass: KetMonomerClass];
+export {};

@@ -1,0 +1,10 @@
+import { MultitailArrowReferencePosition, ReStruct } from "../../render";
+import { Action } from "./..";
+import { Vec2 } from "../../../domain/entities";
+export declare function fromMultitailArrowCreation(reStruct: ReStruct, topLeft: Vec2, bottomRight: Vec2): Action;
+export declare function fromMultitailArrowDeletion(reStruct: ReStruct, id: number): Action;
+export declare function fromMultitailArrowMove(reStruct: ReStruct, id: number, offset: Vec2): Action;
+export declare function fromMultitailArrowTailAdd(reStruct: ReStruct, id: number): Action;
+export declare function fromMultitailArrowTailRemove(reStruct: ReStruct, id: number, tailId: number): Action;
+export declare function fromMultitailArrowHeadTailsResize(reStruct: ReStruct, id: number, ref: MultitailArrowReferencePosition, offset: number): Action;
+export declare function fromMultitailArrowHeadTailMove(reStruct: ReStruct, id: number, ref: MultitailArrowReferencePosition, offset: number, normalize?: true): Action;

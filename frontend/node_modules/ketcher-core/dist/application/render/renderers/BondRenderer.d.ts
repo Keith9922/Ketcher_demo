@@ -1,0 +1,28 @@
+import { BaseRenderer } from "./BaseRenderer";
+import { Bond } from "../../../domain/entities/CoreBond";
+import { Vec2 } from "../../../domain/entities";
+import { D3SvgElementSelection } from "../types";
+export declare class BondRenderer extends BaseRenderer {
+    bond: Bond;
+    private pathShape;
+    private selectionElement;
+    constructor(bond: Bond);
+    private get scaledPosition();
+    private getDoubleBondShiftForChain;
+    private getDoubleBondShiftForLoop;
+    private getDoubleBondShift;
+    private shiftPositionIfAtomLabelVisible;
+    appendSelection(): void;
+    removeSelection(): void;
+    appendHover(): D3SvgElementSelection<SVGGElement, void> | D3SvgElementSelection<SVGUseElement, void> | D3SvgElementSelection<SVGCircleElement, void> | D3SvgElementSelection<SVGRectElement, void> | D3SvgElementSelection<SVGPathElement, void>;
+    removeHover(): void;
+    drawSelection(): void;
+    private appendRootElement;
+    getSelectionPoints(): Vec2[];
+    private getSelectionContour;
+    moveSelection(): void;
+    show(): void;
+    remove(): void;
+    move(): void;
+    protected appendHoverAreaElement(): void;
+}

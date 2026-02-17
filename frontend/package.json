@@ -1,0 +1,32 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.12.0",
+    "@emotion/styled": "^11.12.0",
+    "axios": "^1.5.0",
+    "framer-motion": "^10.0.0",
+    "ketcher-core": "2.28.0",
+    "ketcher-react": "^2.1.0",
+    "process": "^0.11.10",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0"
+  },
+  "overrides": {
+    "ketcher-core": "2.28.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.1.0",
+    "typescript": "^5.1.6",
+    "vite": "^5.0.0"
+  }
+}

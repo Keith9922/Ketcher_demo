@@ -1,0 +1,262 @@
+[
+  {
+    "id": "task_3ae970f8",
+    "title": "Mol-0001",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CCO",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n    \"root\": {\n        \"nodes\": [\n            {\n                \"$ref\": \"mol0\"\n            }\n        ],\n        \"connections\": [],\n        \"templates\": []\n    },\n    \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    5.500695725679397,\n                    -6.711659204751047,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    6.366689778605937,\n                    -6.2116626383962315,\n                    0\n                ]\n            },\n            {\n                \"label\": \"O\",\n                \"location\": [\n                    7.232750497741325,\n                    -6.711659204751047,\n                    0\n                ]\n            }\n        ],\n        \"bonds\": [\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    0,\n                    1\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    1,\n                    2\n                ]\n            }\n        ],\n        \"stereoFlagPosition\": {\n            \"x\": 7.232750497741325,\n            \"y\": 5.211662638396232,\n            \"z\": 0\n        }\n    }\n}",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:30:36.950523"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:42:39.074396"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_3209f2d8",
+    "title": "Mol-0002",
+    "status": "REJECTED",
+    "source": {
+      "smiles": "c1ccccc1",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n    \"root\": {\n        \"nodes\": [\n            {\n                \"$ref\": \"mol0\"\n            }\n        ],\n        \"connections\": [],\n        \"templates\": []\n    },\n    \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.262514667043124,\n                    -6.5875,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    8.762507333521562,\n                    -7.453512701659344,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.7624926664784395,\n                    -7.453512701659344,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.262485332956879,\n                    -6.5875,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.7624926664784395,\n                    -5.721487298340657,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    8.762507333521562,\n                    -5.721487298340657,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.261509641918682,\n                    -4.858446700472359,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.26173039420547,\n                    -4.858145783240131,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.2667353326631,\n                    -6.587197879390571,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.761130039283396,\n                    -5.718704239956825,\n                    0\n                ]\n            }\n        ],\n        \"bonds\": [\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    0,\n                    1\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    1,\n                    2\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    2,\n                    3\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    3,\n                    4\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    4,\n                    5\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    5,\n                    0\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    0,\n                    8\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    8,\n                    9\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    9,\n                    7\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    7,\n                    6\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    6,\n                    5\n                ]\n            }\n        ],\n        \"stereoFlagPosition\": {\n            \"x\": 9.262514667043124,\n            \"y\": 4.721487298340657,\n            \"z\": 0\n        }\n    }\n}",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:42:51.249836"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "REJECTED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:43:07.205782"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_29c53d7e",
+    "title": "Mol-0003",
+    "status": "REJECTED",
+    "source": {
+      "smiles": "C1CCCCC1",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n    \"root\": {\n        \"nodes\": [\n            {\n                \"$ref\": \"mol0\"\n            }\n        ],\n        \"connections\": [],\n        \"templates\": []\n    },\n    \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.262514667043124,\n                    -6.5875,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    8.762507333521562,\n                    -7.453512701659344,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.7624926664784395,\n                    -7.453512701659344,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.262485332956879,\n                    -6.5875,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.7624926664784395,\n                    -5.721487298340657,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    8.762507333521562,\n                    -5.721487298340657,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.262529334086247,\n                    -6.587499999999999,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.762536667607808,\n                    -5.721487298340654,\n                    0\n                ]\n            },\n            {\n                \"label\": \"P\",\n                \"location\": [\n                    10.262529334086246,\n                    -4.85547459668131,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.262514667043122,\n                    -4.8554745966813115,\n                    0\n                ]\n            },\n            {\n                \"label\": \"Cl\",\n                \"location\": [\n                    11.228455160375313,\n                    -4.596655551578789,\n                    0\n                ]\n            },\n            {\n                \"label\": \"Cl\",\n                \"location\": [\n                    10.003710288983726,\n                    -3.8895487703922416,\n                    0\n                ]\n            },\n            {\n                \"label\": \"Cl\",\n                \"location\": [\n                    10.762529334086246,\n                    -3.9894491928968714,\n                    0\n                ]\n            },\n            {\n                \"label\": \"Cl\",\n                \"location\": [\n                    10.003710288983726,\n                    -5.821400422970378,\n                    0\n                ]\n            },\n            {\n                \"label\": \"Cl\",\n                \"location\": [\n                    11.228455160375313,\n                    -5.1142936417838305,\n                    0\n                ]\n            }\n        ],\n        \"bonds\": [\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    0,\n                    1\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    1,\n                    2\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    2,\n                    3\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    3,\n                    4\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    4,\n                    5\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    5,\n                    0\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    0,\n                    6\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    6,\n                    7\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    7,\n                    8\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    9\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    9,\n                    5\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    10\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    11\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    12\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    13\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    8,\n                    14\n                ]\n            }\n        ],\n        \"stereoFlagPosition\": {\n            \"x\": 9.262514667043124,\n            \"y\": 4.721487298340657,\n            \"z\": 0\n        }\n    }\n}",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:43:39.797711"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "REJECTED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:43:52.069204"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_09f608cc",
+    "title": "Mol-0004",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC(C)O",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:49:34.330736",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n    \"root\": {\n        \"nodes\": [\n            {\n                \"$ref\": \"mol0\"\n            }\n        ],\n        \"connections\": [],\n        \"templates\": []\n    },\n    \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    7.4163649678230295,\n                    -7.301542532444,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    8.282361003098314,\n                    -6.80154482154603,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.148423704735052,\n                    -7.301542532444,\n                    0\n                ]\n            },\n            {\n                \"label\": \"O\",\n                \"location\": [\n                    8.282361003098314,\n                    -5.8015493997500895,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.73238449144851,\n                    -7.638203381786985,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.067525335278468,\n                    -6.897293449865956,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    10.232017382533554,\n                    -8.504911570919468,\n                    0\n                ]\n            },\n            {\n                \"label\": \"C\",\n                \"location\": [\n                    9.257881316343177,\n                    -8.299713970701228,\n                    0\n                ]\n            }\n        ],\n        \"bonds\": [\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    0,\n                    1\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    1,\n                    2\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    1,\n                    3\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    2,\n                    7\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    7,\n                    6\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    6,\n                    4\n                ]\n            },\n            {\n                \"type\": 2,\n                \"atoms\": [\n                    4,\n                    5\n                ]\n            },\n            {\n                \"type\": 1,\n                \"atoms\": [\n                    5,\n                    2\n                ]\n            }\n        ],\n        \"stereoFlagPosition\": {\n            \"x\": 9.148423704735052,\n            \"y\": 4.8015493997500895,\n            \"z\": 0\n        }\n    }\n}",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:49:35.402917"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:49:41.143877"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_86a70341",
+    "title": "Mol-0005",
+    "status": "NEW",
+    "source": {
+      "smiles": "C1=CC=C(C=C1)O",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_e5a6ccc3",
+    "title": "Mol-0006",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(=O)O",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_2419d967",
+    "title": "Mol-0007",
+    "status": "NEW",
+    "source": {
+      "smiles": "C1CCCNC1",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_5b2c357c",
+    "title": "Mol-0008",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(C)(C)O",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_a4194f90",
+    "title": "Mol-0009",
+    "status": "NEW",
+    "source": {
+      "smiles": "c1ccc2ccccc2c1",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_15dbdbe6",
+    "title": "Mol-0010",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC(=O)C",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  }
+]

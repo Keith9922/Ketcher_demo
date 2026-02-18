@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Badge,
   Box,
@@ -29,7 +29,7 @@ import {
 } from "@chakra-ui/react";
 import { Task, TaskStatus } from "./types";
 import { KetcherEditor } from "./components/KetcherEditor";
-import { storageService } from "./utils/storage";
+import { apiClient } from "./api/client";
 
 const statusScheme: Record<TaskStatus, string> = {
   NEW: "gray",
@@ -43,40 +43,166 @@ function getStatusLabel(status: TaskStatus) {
   return status.replace("_", " ");
 }
 
-const defaultSmiles = "CCO";
+interface KetcherWindowApi {
+  getMolfile?: () => Promise<string>;
+  getSmiles?: () => Promise<string>;
+}
+
+const MANUAL_REVIEW_WARNING = "manual_review_required_json_payload";
+
+function getApiErrorMessage(error: unknown): string {
+  if (typeof error !== "object" || !error || !("response" in error)) {
+    return "后端校验失败，请稍后重试";
+  }
+  const maybeAxiosError = error as {
+    response?: {
+      data?: {
+        detail?: { message?: string } | string;
+        message?: string;
+      };
+    };
+  };
+  const detail = maybeAxiosError.response?.data?.detail;
+  if (Array.isArray(detail) && detail.length > 0) {
+    const first = detail[0] as { msg?: string; loc?: unknown[] };
+    const location = Array.isArray(first?.loc) ? first.loc.join(".") : "";
+    const message = first?.msg?.trim();
+    if (location && message) {
+      return `${location}: ${message}`;
+    }
+    if (message) {
+      return message;
+    }
+  }
+  if (typeof detail === "string" && detail.trim()) {
+    return detail;
+  }
+  if (detail && typeof detail === "object" && "message" in detail && typeof detail.message === "string" && detail.message.trim()) {
+    return detail.message;
+  }
+  const message = maybeAxiosError.response?.data?.message;
+  if (message && message.trim()) {
+    return message;
+  }
+  return "后端校验失败，请稍后重试";
+}
+
+async function getActiveEditorMolfile(): Promise<string | undefined> {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+  const editor = (window as Window & { ketcher?: KetcherWindowApi }).ketcher;
+  if (!editor?.getMolfile) {
+    return undefined;
+  }
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const molfile = await editor.getMolfile();
+      const normalized = molfile?.trim();
+      if (normalized) {
+        return normalized;
+      }
+    } catch (error) {
+      if (attempt === 2) {
+        console.warn("读取当前编辑器 molfile 失败", error);
+      }
+    }
+    await new Promise((resolve) => setTimeout(resolve, 80));
+  }
+  return undefined;
+}
+
+async function getActiveEditorSmiles(): Promise<string | undefined> {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+  const editor = (window as Window & { ketcher?: KetcherWindowApi }).ketcher;
+  if (!editor?.getSmiles) {
+    return undefined;
+  }
+  try {
+    const smiles = await editor.getSmiles();
+    const normalized = smiles?.trim();
+    return normalized || undefined;
+  } catch (error) {
+    console.warn("读取当前编辑器 smiles 失败", error);
+    return undefined;
+  }
+}
+
+function normalizeSmilesCandidate(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+  const candidate = value.trim();
+  return candidate || undefined;
+}
+
+function looksLikeStructuredJson(value: string): boolean {
+  const candidate = value.trim();
+  if (!candidate || !candidate.startsWith("{")) return false;
+  return ["\"root\"", "\"atoms\"", "\"bonds\"", "\"molecule\"", "\"connections\"", "\"templates\""].some((token) =>
+    candidate.includes(token),
+  );
+}
+
+function looksLikeMolblock(value: string): boolean {
+  const candidate = value.trim();
+  if (!candidate) return false;
+  return candidate.includes("M  END");
+}
+
+function normalizeReviewDecision(value: TaskStatus): "APPROVED" | "REJECTED" {
+  return value === "REJECTED" ? "REJECTED" : "APPROVED";
+}
 
 function App() {
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [editorSmiles, setEditorSmiles] = useState(defaultSmiles);
+  const [editorSmilesByTask, setEditorSmilesByTask] = useState<Record<string, string>>({});
+  const [editorMolByTask, setEditorMolByTask] = useState<Record<string, string>>({});
   const [annotator, setAnnotator] = useState("alice");
   const [reviewer, setReviewer] = useState("bob");
   const [comment, setComment] = useState("");
   const [decision, setDecision] = useState<TaskStatus>("APPROVED");
   const [busy, setBusy] = useState(false);
+  const [loadingTasks, setLoadingTasks] = useState(false);
 
-  // 初始化：从 LocalStorage 加载数据
+  const fetchTasks = useCallback(
+    async (showSuccessToast = false) => {
+      setLoadingTasks(true);
+      try {
+        const { data } = await apiClient.get<Task[]>("/api/tasks");
+        setTasks(data);
+        if (showSuccessToast) {
+          toast({ status: "success", title: "任务列表已刷新" });
+        }
+      } catch (error) {
+        toast({
+          status: "error",
+          title: "加载任务失败",
+          description: getApiErrorMessage(error),
+          duration: 5000,
+        });
+      } finally {
+        setLoadingTasks(false);
+      }
+    },
+    [toast],
+  );
+
   useEffect(() => {
-    const savedTasks = storageService.getTasks();
-    if (savedTasks.length === 0) {
-      // 如果没有数据，初始化演示数据
-      const demoTasks = storageService.initDemoData();
-      setTasks(demoTasks);
-      toast({
-        status: "info",
-        title: "已初始化演示数据",
-        description: "数据保存在浏览器本地存储中",
-        duration: 3000,
-      });
-    } else {
-      setTasks(savedTasks);
+    void fetchTasks();
+  }, [fetchTasks]);
+
+  useEffect(() => {
+    if (tasks.length === 0) {
+      if (selectedId) {
+        setSelectedId(null);
+      }
+      return;
     }
-  }, []);
-
-  useEffect(() => {
-    if (!selectedId && tasks.length) {
+    if (!selectedId || !tasks.some((task) => task.id === selectedId)) {
       setSelectedId(tasks[0].id);
     }
   }, [selectedId, tasks]);
@@ -88,118 +214,243 @@ function App() {
     return tasks[0] ?? null;
   }, [selectedId, tasks]);
 
-  useEffect(() => {
-    if (selectedTask) {
-      // 如果任务已有标注，显示标注的SMILES；否则显示源SMILES
-      const displaySmiles = selectedTask.annotation?.smiles || selectedTask.source?.smiles || "";
-      setEditorSmiles(displaySmiles);
+  const selectedEditorSmiles = useMemo(() => {
+    if (!selectedTask) {
+      return "";
     }
-  }, [selectedTask?.id, selectedTask?.source?.smiles, selectedTask?.annotation?.smiles]);
+    const taskDraft = editorSmilesByTask[selectedTask.id];
+    if (taskDraft !== undefined) {
+      return taskDraft;
+    }
+    return selectedTask.annotation?.canonical_smiles || selectedTask.annotation?.smiles || selectedTask.source?.smiles || "";
+  }, [editorSmilesByTask, selectedTask]);
+
+  const handleEditorSmilesChange = useCallback(
+    (nextSmiles: string) => {
+      if (!selectedTask?.id) {
+        return;
+      }
+      setEditorSmilesByTask((prev) => {
+        if (prev[selectedTask.id] === nextSmiles) {
+          return prev;
+        }
+        return {
+          ...prev,
+          [selectedTask.id]: nextSmiles,
+        };
+      });
+    },
+    [selectedTask?.id],
+  );
+
+  const handleEditorMolChange = useCallback(
+    (nextMolfile: string) => {
+      if (!selectedTask?.id) {
+        return;
+      }
+      setEditorMolByTask((prev) => {
+        if (prev[selectedTask.id] === nextMolfile) {
+          return prev;
+        }
+        return {
+          ...prev,
+          [selectedTask.id]: nextMolfile,
+        };
+      });
+    },
+    [selectedTask?.id],
+  );
 
   const warnings = useMemo(() => selectedTask?.annotation?.qc.warnings ?? [], [selectedTask]);
 
-  // 保存任务到 LocalStorage
-  const saveTasks = (newTasks: Task[]) => {
-    setTasks(newTasks);
-    storageService.saveTasks(newTasks);
-  };
+  const replaceTaskInList = useCallback((updatedTask: Task) => {
+    setTasks((prev) => {
+      const index = prev.findIndex((task) => task.id === updatedTask.id);
+      if (index === -1) {
+        return [updatedTask, ...prev];
+      }
+      const next = [...prev];
+      next[index] = updatedTask;
+      return next;
+    });
+  }, []);
 
-  // 刷新任务列表
-  const refreshTasks = () => {
-    const savedTasks = storageService.getTasks();
-    setTasks(savedTasks);
-  };
+  const refreshTasks = useCallback(() => {
+    void fetchTasks(true);
+  }, [fetchTasks]);
 
-  const updateLocalTask = (updater: (task: Task) => Task) => {
-    if (!selectedTask) {
+  const handleClaim = async () => {
+    if (!selectedTask) return;
+    if (selectedTask.status !== "NEW") {
+      toast({ status: "warning", title: "当前任务状态不允许领取" });
       return;
     }
-    const newTasks = tasks.map((task) => (task.id === selectedTask.id ? updater(task) : task));
-    saveTasks(newTasks);
-  };
-
-  const handleClaim = () => {
-    if (!selectedTask) return;
-    updateLocalTask((task) => ({ ...task, status: "IN_PROGRESS" }));
-    toast({ status: "success", title: "任务已领取" });
-  };
-
-  const handleSubmit = () => {
-    if (!selectedTask) return;
-    const nextSmiles = (editorSmiles || selectedTask.source.smiles || "").trim();
-    const warningsLocal = nextSmiles ? [] : ["结构为空"];
-    updateLocalTask((task) => ({
-      ...task,
-      status: "SUBMITTED",
-      annotation: {
-        annotator,
-        smiles: nextSmiles,
-        canonical_smiles: nextSmiles,
-        mol: undefined,
-        molblock: undefined,
-        qc: {
-          rdkit_parse_ok: warningsLocal.length === 0,
-          sanitize_ok: warningsLocal.length === 0,
-          warnings: warningsLocal,
-        },
-        submitted_at: new Date().toISOString(),
-      },
-    }));
-    toast({ status: "success", title: "标注已提交" });
-  };
-
-  const handleReview = () => {
-    if (!selectedTask) return;
-    updateLocalTask((task) => ({
-      ...task,
-      status: decision,
-      review: {
-        reviewer,
-        decision,
-        comment,
-        reviewed_at: new Date().toISOString(),
-      },
-    }));
-    toast({ status: "success", title: "审阅完成" });
-  };
-
-  const handleExport = (format: "smiles" | "csv" | "sdf") => {
-    const approved = tasks.filter((t) => t.status === "APPROVED");
-    if (approved.length === 0) {
-      toast({ status: "warning", title: "没有已通过的任务" });
-      return;
-    }
-
-    let content = "";
-    let filename = `molecules.${format}`;
-    let mimeType = "text/plain";
-
-    if (format === "smiles") {
-      content = approved.map((t) => t.annotation?.canonical_smiles || t.source.smiles || "").join("\n");
-    } else if (format === "csv") {
-      mimeType = "text/csv";
-      const headers = "id,title,canonical_smiles,qc_warnings,review_comment,reviewed_at";
-      const rows = approved.map((t) => {
-        const canonical = t.annotation?.canonical_smiles || "";
-        const warnings = t.annotation?.qc.warnings.join(";") || "";
-        const comment = t.review?.comment || "";
-        const reviewedAt = t.review?.reviewed_at || "";
-        return `${t.id},${t.title},${canonical},${warnings},${comment},${reviewedAt}`;
+    setBusy(true);
+    try {
+      const user = annotator.trim();
+      const { data } = await apiClient.post<Task>(`/api/tasks/${selectedTask.id}/claim`, { user: user || "annotator" });
+      replaceTaskInList(data);
+      toast({ status: "success", title: "任务已领取" });
+    } catch (error) {
+      toast({
+        status: "error",
+        title: "领取失败",
+        description: getApiErrorMessage(error),
+        duration: 5000,
       });
-      content = [headers, ...rows].join("\n");
-    } else if (format === "sdf") {
-      mimeType = "chemical/x-mdl-sdfile";
-      content = "SDF export not implemented in browser mode";
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleSubmit = async () => {
+    if (!selectedTask) return;
+    if (selectedTask.status !== "IN_PROGRESS") {
+      toast({ status: "warning", title: "当前任务状态不允许提交" });
+      return;
+    }
+    const rawInput = (selectedEditorSmiles || selectedTask.source.smiles || "").trim();
+    if (!rawInput) {
+      toast({
+        status: "error",
+        title: "结构为空，不能提交",
+        description: "请至少绘制或输入一个有效结构。",
+      });
+      return;
+    }
+    const currentAnnotator = annotator.trim() || "annotator";
+    if (selectedTask.claimed_by && selectedTask.claimed_by !== currentAnnotator) {
+      toast({
+        status: "error",
+        title: "提交人不匹配领取人",
+        description: `当前任务领取人为 ${selectedTask.claimed_by}，请使用同一标注员提交。`,
+        duration: 5000,
+      });
+      return;
     }
 
-    const blob = new Blob([content], { type: mimeType });
-    const url = URL.createObjectURL(blob);
-    const anchor = document.createElement("a");
-    anchor.href = url;
-    anchor.download = filename;
-    anchor.click();
-    URL.revokeObjectURL(url);
-    toast({ status: "success", title: `已导出 ${format.toUpperCase()} 格式` });
+    setBusy(true);
+    try {
+      const cachedMolfile = editorMolByTask[selectedTask.id];
+      const activeSmiles = await getActiveEditorSmiles();
+      const activeMolfile = await getActiveEditorMolfile();
+      const inputMolCandidate = looksLikeMolblock(rawInput) ? rawInput : undefined;
+      const inputSmilesCandidate = inputMolCandidate ? undefined : normalizeSmilesCandidate(rawInput);
+      const cachedMolCandidate = cachedMolfile && looksLikeMolblock(cachedMolfile) ? cachedMolfile : undefined;
+      const activeMolCandidate = activeMolfile && looksLikeMolblock(activeMolfile) ? activeMolfile : undefined;
+      const molCandidate = cachedMolCandidate || activeMolCandidate || inputMolCandidate;
+      const smilesCandidate = normalizeSmilesCandidate(activeSmiles) || inputSmilesCandidate;
+      const finalSmiles =
+        smilesCandidate && molCandidate && looksLikeStructuredJson(smilesCandidate) ? undefined : smilesCandidate;
+
+      if (!finalSmiles && !molCandidate) {
+        toast({
+          status: "error",
+          title: "无法识别结构",
+          description: "请在编辑器中重新绘制后再提交。",
+          duration: 5000,
+        });
+        return;
+      }
+
+      const payload = {
+        annotator: currentAnnotator,
+        smiles: finalSmiles,
+        mol: molCandidate,
+      };
+      const { data } = await apiClient.post<Task>(`/api/tasks/${selectedTask.id}/submit`, payload);
+      replaceTaskInList(data);
+
+      setEditorSmilesByTask((prev) => ({
+        ...prev,
+        [selectedTask.id]: data.annotation?.canonical_smiles || data.annotation?.smiles || data.source.smiles || rawInput,
+      }));
+      const manualReviewRequired = data.annotation?.qc?.warnings?.includes(MANUAL_REVIEW_WARNING);
+      toast({
+        status: "success",
+        title: manualReviewRequired ? "标注已提交（需人工审阅）" : "标注已提交（RDKit 已通过）",
+      });
+    } catch (error) {
+      toast({
+        status: "error",
+        title: "提交失败",
+        description: getApiErrorMessage(error),
+        duration: 5000,
+      });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleReview = async () => {
+    if (!selectedTask) return;
+    if (selectedTask.status !== "SUBMITTED") {
+      toast({ status: "warning", title: "当前任务状态不允许审阅" });
+      return;
+    }
+    if (decision === "APPROVED") {
+      const qc = selectedTask.annotation?.qc;
+      const manualReviewAllowed = qc?.warnings?.includes(MANUAL_REVIEW_WARNING) ?? false;
+      if (!manualReviewAllowed && (!qc || !qc.rdkit_parse_ok || !qc.sanitize_ok)) {
+        toast({
+          status: "error",
+          title: "QC 未通过，不能审批通过",
+          description: "请退回给标注员修正后再提交。",
+        });
+        return;
+      }
+    }
+    setBusy(true);
+    try {
+      const normalizedDecision = normalizeReviewDecision(decision);
+      const payload = {
+        reviewer: reviewer.trim() || "reviewer",
+        decision: normalizedDecision,
+        // 兼容可能存在的旧后端字段
+        status: normalizedDecision,
+        // 传 null 兼容“字段必填但可为空”的旧后端实现
+        comment: comment.trim() || null,
+      };
+      const { data } = await apiClient.post<Task>(`/api/tasks/${selectedTask.id}/review`, payload);
+      replaceTaskInList(data);
+      toast({ status: "success", title: "审阅完成" });
+    } catch (error) {
+      toast({
+        status: "error",
+        title: "审阅提交失败",
+        description: getApiErrorMessage(error),
+        duration: 5000,
+      });
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleExport = async (format: "smiles" | "csv" | "sdf") => {
+    setBusy(true);
+    try {
+      const response = await apiClient.get(`/api/export`, {
+        params: { format },
+        responseType: "blob",
+      });
+      const blob = new Blob([response.data], { type: response.headers["content-type"] || "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `molecules.${format}`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+      toast({ status: "success", title: `已导出 ${format.toUpperCase()} 格式` });
+    } catch (error) {
+      toast({
+        status: "error",
+        title: "导出失败",
+        description: getApiErrorMessage(error),
+        duration: 5000,
+      });
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -268,7 +519,7 @@ function App() {
         <Box borderWidth={1} borderRadius="lg" p={4} maxH="md" overflowY="auto">
           <Flex justify="space-between" mb={4} align="center">
             <Text fontWeight="bold">任务列表</Text>
-            <Button size="xs" onClick={refreshTasks} isLoading={busy}>
+            <Button size="xs" onClick={refreshTasks} isLoading={loadingTasks}>
               刷新
             </Button>
           </Flex>
@@ -296,7 +547,7 @@ function App() {
         </Box>
 
         <Box borderWidth={1} borderRadius="lg" p={4}>
-          <Tabs colorScheme="blue">
+          <Tabs colorScheme="blue" isLazy lazyBehavior="unmount">
             <TabList mb={4}>
               <Tab>
                 <Text fontWeight="bold">👨‍💻 标注工作台</Text>
@@ -320,10 +571,12 @@ function App() {
                 <Flex gap={4} flexDir={{ base: "column", lg: "row" }}>
                   <Box flex={1}>
                     <KetcherEditor
-                      key={`annotate-${selectedTask?.id}-${selectedTask?.annotation?.smiles || "new"}`}
-                      smiles={editorSmiles}
-                      onChange={setEditorSmiles}
+                      key={`annotate-${selectedTask?.id || "none"}`}
+                      smiles={selectedEditorSmiles}
+                      onChange={handleEditorSmilesChange}
+                      onMolChange={handleEditorMolChange}
                       height="600px"
+                      readOnly={false}
                     />
                   </Box>
                   <Box w={{ base: "100%", lg: "300px" }}>
@@ -332,7 +585,12 @@ function App() {
                       <Button colorScheme="blue" onClick={handleClaim} isDisabled={!selectedTask || selectedTask.status !== "NEW"} isLoading={busy}>
                         领取任务
                       </Button>
-                      <Button colorScheme="green" onClick={handleSubmit} isDisabled={!selectedTask} isLoading={busy}>
+                      <Button
+                        colorScheme="green"
+                        onClick={handleSubmit}
+                        isDisabled={!selectedTask || selectedTask.status !== "IN_PROGRESS"}
+                        isLoading={busy}
+                      >
                         提交标注
                       </Button>
                       <Box borderWidth={1} borderRadius="md" p={2}>
@@ -380,10 +638,11 @@ function App() {
                 <Flex gap={4} flexDir={{ base: "column", lg: "row" }}>
                   <Box flex={1}>
                     <KetcherEditor
-                      key={`review-${selectedTask?.id}-${selectedTask?.annotation?.smiles || "empty"}`}
-                      smiles={selectedTask?.annotation?.smiles || selectedTask?.source?.smiles || ""}
+                      key={`review-${selectedTask?.id || "none"}-${selectedTask?.annotation?.submitted_at || "source"}`}
+                      smiles={selectedTask?.annotation?.canonical_smiles || selectedTask?.annotation?.smiles || selectedTask?.source?.smiles || ""}
                       onChange={() => {}}
                       height="600px"
+                      readOnly
                     />
                     <Text fontSize="sm" color="gray.500" mt={2}>
                       💡 审阅模式下编辑器为只读，仅供查看
@@ -393,16 +652,24 @@ function App() {
                     <Stack spacing={3}>
                       {selectedTask?.annotation && (
                         <Box borderWidth={1} borderRadius="md" p={3} bg="gray.50">
+                          {(() => {
+                            const manualReviewMode = selectedTask.annotation?.qc.warnings.includes(MANUAL_REVIEW_WARNING);
+                            return (
+                              <>
                           <Text fontSize="sm" fontWeight="semibold" mb={2}>
                             标注信息
                           </Text>
                           <Text fontSize="xs" mb={1}>标注人：{selectedTask.annotation.annotator}</Text>
                           <Text fontSize="xs" mb={1}>提交时间：{new Date(selectedTask.annotation.submitted_at).toLocaleString()}</Text>
-                          <Text fontSize="xs" mb={1}>SMILES：{selectedTask.annotation.smiles}</Text>
+                          <Text fontSize="xs" mb={1}>SMILES：{selectedTask.annotation.canonical_smiles || selectedTask.annotation.smiles}</Text>
                           <Box mt={2}>
                             <Text fontSize="xs" fontWeight="semibold">QC 状态：</Text>
-                            <Text fontSize="xs">解析成功：{selectedTask.annotation.qc.rdkit_parse_ok ? "✅" : "❌"}</Text>
-                            <Text fontSize="xs">验证通过：{selectedTask.annotation.qc.sanitize_ok ? "✅" : "❌"}</Text>
+                            <Text fontSize="xs">
+                              解析状态：{manualReviewMode ? "📝 人工审阅模式" : selectedTask.annotation.qc.rdkit_parse_ok ? "✅" : "❌"}
+                            </Text>
+                            <Text fontSize="xs">
+                              验证状态：{manualReviewMode ? "📝 人工审阅模式" : selectedTask.annotation.qc.sanitize_ok ? "✅" : "❌"}
+                            </Text>
                             {selectedTask.annotation.qc.warnings.length > 0 && (
                               <Box mt={1}>
                                 <Text fontSize="xs" fontWeight="semibold">警告：</Text>
@@ -414,6 +681,9 @@ function App() {
                               </Box>
                             )}
                           </Box>
+                              </>
+                            );
+                          })()}
                         </Box>
                       )}
                       <Input placeholder="审阅者" value={reviewer} onChange={(event) => setReviewer(event.target.value)} />

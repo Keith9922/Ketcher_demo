@@ -7,6 +7,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
 
 from .schemas import (
+    Chem3DRequest,
+    Chem3DResponse,
     ChemParseRequest,
     ChemParseResponse,
     ClaimRequest,
@@ -18,6 +20,7 @@ from .schemas import (
     TaskSeed,
 )
 from .services.qc_service import parse_and_qc
+from .services.rdkit_service import generate_3d_molblock
 from .storage import TaskStore
 
 store = TaskStore()
@@ -52,8 +55,8 @@ app.add_middleware(
 )
 
 
-def respond_error(code: str, message: str, detail: str | None = None) -> ErrorResponse:
-    return ErrorResponse(code=code, message=message, detail=detail)
+def respond_error(code: str, message: str, detail: str | None = None) -> dict:
+    return ErrorResponse(code=code, message=message, detail=detail).model_dump()
 
 
 @app.post(
@@ -69,6 +72,35 @@ def chem_parse(payload: ChemParseRequest) -> ChemParseResponse:
             detail=respond_error("parse_failure", "无法解析分子结构"),
         )
     return ChemParseResponse(ok=qc.sanitize_ok, canonical_smiles=canonical, molblock=molblock, qc=qc)
+
+
+@app.post(
+    "/api/chem/3d",
+    response_model=Chem3DResponse,
+    responses={400: {"model": ErrorResponse}},
+)
+def chem_3d(payload: Chem3DRequest) -> Chem3DResponse:
+    qc, canonical, _, result = parse_and_qc(payload.smiles, payload.mol)
+    if not result or not result.mol:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=respond_error("parse_failure", "无法解析分子结构"),
+        )
+    if not qc.sanitize_ok:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=respond_error("sanitize_failure", "分子结构未通过规范化校验", "；".join(qc.warnings)),
+        )
+
+    molblock_3d, warnings_3d = generate_3d_molblock(result.mol)
+    if warnings_3d:
+        qc.warnings.extend(warnings_3d)
+    if not molblock_3d:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=respond_error("generate_3d_failure", "无法生成3D构象", "；".join(qc.warnings)),
+        )
+    return Chem3DResponse(ok=True, canonical_smiles=canonical, molblock_3d=molblock_3d, qc=qc)
 
 
 @app.get("/api/tasks", response_model=list[Task])
@@ -95,6 +127,8 @@ def claim_task(task_id: str, payload: ClaimRequest) -> Task:
         return store.claim_task(task_id, payload)
     except KeyError as exc:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=respond_error("not_found", str(exc)))
+    except ValueError as exc:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=respond_error("invalid_state", str(exc)))
 
 
 @app.post("/api/tasks/{task_id}/submit", response_model=Task)

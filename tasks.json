@@ -7,6 +7,8 @@
       "smiles": "CCO",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": {
       "annotator": "alice",
       "smiles": "CCO",
@@ -35,6 +37,8 @@
       "smiles": "c1ccccc1",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": {
       "annotator": "alice",
       "smiles": "c1ccccc1",
@@ -63,6 +67,8 @@
       "smiles": "C1CCCCC1",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -79,6 +85,8 @@
       "smiles": "CC(C)O",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -95,6 +103,8 @@
       "smiles": "C1=CC=C(C=C1)O",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -111,6 +121,8 @@
       "smiles": "CC(=O)O",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -127,6 +139,8 @@
       "smiles": "C1CCCNC1",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -143,6 +157,8 @@
       "smiles": "CC(C)(C)O",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -159,6 +175,8 @@
       "smiles": "c1ccc2ccccc2c1",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
     "context": {
@@ -175,8 +193,2013 @@
       "smiles": "CC(=O)C",
       "mol": null
     },
+    "claimed_by": null,
+    "claimed_at": null,
     "annotation": null,
     "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_52783718",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 18:51:52.944847"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 18:51:52.946054"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b699b6da",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c28be0be",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 18:52:06.229546"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 18:52:06.230781"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_9a2dd760",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_f141f6d2",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 18:57:27.719831"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 18:57:27.721498"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_8f0d7610",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_8f25f782",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:15:23.586903"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:15:23.588238"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_8763b48f",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_77d828dc",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:15:49.758393"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:15:49.759871"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_ee6b6fc2",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_1d7f65f5",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:19:24.441951"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:19:24.443644"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_6f0bc838",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_429b6632",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:25:13.046959"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:25:13.048671"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_20e89445",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_2ffa3a95",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_0afdb373",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_5d614db9",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:25:49.919807"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:25:49.921583"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b71c2011",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_f74313f9",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_4b5489c4",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_ed6e7b64",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-17 19:26:41.192661"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-17 19:26:41.194208"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b6a89409",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_4ae244d2",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_5a3ccdf0",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_d3fa361f",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:04:47.555738"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:04:47.557609"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_19f26424",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_26bd97e4",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_fade50db",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_1533d6f9",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:08:06.190358"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:08:06.192270"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b36f6e33",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_573df1cc",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_38054a84",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_f1c8f99d",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:18:37.018625"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:18:37.020402"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_e90cfd18",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_3da484b1",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_4619a8b7",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_6b545b81",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:27:36.180300"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:27:36.182339"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_2e492130",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_da9b9c4d",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:27:36.194439"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:27:36.196214"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_bc25ccc4",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_33578527",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_5d1ec9ae",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:28:26.847010"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:28:26.848928"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c503d8f0",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_5c084060",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:28:26.860713"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:28:26.862457"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c1460d9c",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_d6dc2269",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_58c2f3a5",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:29:01.345995"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:29:01.347716"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_66539bad",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b5c2982b",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:29:01.357271"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:29:01.358626"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_a5eaef19",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_0e62aebf",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_534a755a",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:37:56.787705"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:37:56.789708"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_7deac3d1",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_635e84cf",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:37:56.800766"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:37:56.802284"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_702f74fa",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_e6b126f2",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_cddeab48",
+    "title": "review-compat",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:37:56.815727"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "lowercase accepted",
+      "reviewed_at": "2026-02-18 03:37:56.817346"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c0787ee8",
+    "title": "review-compat-alias",
+    "status": "REJECTED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:37:56.822162"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "REJECTED",
+      "comment": "status alias accepted",
+      "reviewed_at": "2026-02-18 03:37:56.823714"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_b2087145",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:40:52.956636"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:40:52.958956"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_2b2bae6c",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_9b9ab599",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:40:52.971773"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:40:52.973538"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_53b3c4b3",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_93f7c176",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_fb8a06cf",
+    "title": "review-compat",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:40:52.987872"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "lowercase accepted",
+      "reviewed_at": "2026-02-18 03:40:52.989764"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_aca21db6",
+    "title": "review-compat-alias",
+    "status": "REJECTED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:40:52.994987"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "REJECTED",
+      "comment": "status alias accepted",
+      "reviewed_at": "2026-02-18 03:40:52.996809"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c3967352",
+    "title": "review-no-comment",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:40:53.002787"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:40:53.004578"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_c95a08a4",
+    "title": "flow-1",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.659837",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:48:23.662000"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "looks good",
+      "reviewed_at": "2026-02-18 03:48:23.664006"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_87bc0f31",
+    "title": "invalid-structure",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.668938",
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_93dc609b",
+    "title": "submit-needs-claim",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_bd156172",
+    "title": "submit-annotator-mismatch",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.676565",
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_59d91fd1",
+    "title": "json-structure",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.681014",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\n        \"nodes\": [{\"$ref\": \"mol0\"}],\n        \"connections\": [],\n        \"templates\": []\n      },\n      \"mol0\": {\n        \"type\": \"molecule\",\n        \"atoms\": [{\"label\": \"C\"}, {\"label\": \"O\"}],\n        \"bonds\": [{\"type\": 1, \"atoms\": [0, 1]}]\n      }\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:48:23.682783"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual json review passed",
+      "reviewed_at": "2026-02-18 03:48:23.684582"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_95a60151",
+    "title": "claim-invalid",
+    "status": "IN_PROGRESS",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.688434",
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_6609e67b",
+    "title": "review-invalid",
+    "status": "NEW",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": null,
+    "claimed_at": null,
+    "annotation": null,
+    "review": null,
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_9f2e9df7",
+    "title": "review-compat",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.695992",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:48:23.697825"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "lowercase accepted",
+      "reviewed_at": "2026-02-18 03:48:23.699562"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_554d0cf3",
+    "title": "review-compat-alias",
+    "status": "REJECTED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.703213",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:48:23.705169"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "REJECTED",
+      "comment": "status alias accepted",
+      "reviewed_at": "2026-02-18 03:48:23.707004"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_96104d31",
+    "title": "review-no-comment",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.710957",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:48:23.712914"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": null,
+      "reviewed_at": "2026-02-18 03:48:23.714876"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_97e867c0",
+    "title": "export-no-source-fallback",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "N#N",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.718947",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "{\n      \"root\": {\"nodes\": [{\"$ref\": \"mol0\"}], \"connections\": [], \"templates\": []},\n      \"mol0\": {\"type\": \"molecule\", \"atoms\": [{\"label\": \"C\"}], \"bonds\": []}\n    }",
+      "mol": null,
+      "canonical_smiles": null,
+      "molblock": null,
+      "qc": {
+        "rdkit_parse_ok": false,
+        "sanitize_ok": false,
+        "warnings": [
+          "structured_json_payload",
+          "manual_review_required_json_payload"
+        ]
+      },
+      "submitted_at": "2026-02-18 03:48:23.720937"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "manual approve",
+      "reviewed_at": "2026-02-18 03:48:23.722968"
+    },
+    "context": {
+      "ph": null,
+      "solvent": null,
+      "temperature": null
+    }
+  },
+  {
+    "id": "task_04a5ae97",
+    "title": "csv-escape",
+    "status": "APPROVED",
+    "source": {
+      "smiles": "CC",
+      "mol": null
+    },
+    "claimed_by": "alice",
+    "claimed_at": "2026-02-18 03:48:23.727927",
+    "annotation": {
+      "annotator": "alice",
+      "smiles": "CC",
+      "mol": null,
+      "canonical_smiles": "CC",
+      "molblock": "\n     RDKit          2D\n\n  2  1  0  0  0  0  0  0  0  0999 V2000\n    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n    1.2990    0.7500    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n  1  2  1  0\nM  END\n",
+      "qc": {
+        "rdkit_parse_ok": true,
+        "sanitize_ok": true,
+        "warnings": []
+      },
+      "submitted_at": "2026-02-18 03:48:23.729951"
+    },
+    "review": {
+      "reviewer": "bob",
+      "decision": "APPROVED",
+      "comment": "line1,with,comma\nline2 \"quoted\"",
+      "reviewed_at": "2026-02-18 03:48:23.731891"
+    },
     "context": {
       "ph": null,
       "solvent": null,

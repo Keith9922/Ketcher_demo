@@ -53,6 +53,32 @@ class ChemParseResponse(BaseModel):
     qc: QCResult
 
 
+class Chem3DRequest(BaseModel):
+    smiles: Optional[str] = None
+    mol: Optional[str] = None
+
+    @field_validator("smiles", "mol", mode="before")
+    @classmethod
+    def strip_empty(cls, value: Optional[str]) -> Optional[str]:
+        if value is None:
+            return None
+        stripped = value.strip()
+        return stripped or None
+
+    @model_validator(mode="after")
+    def require_smiles_or_mol(self) -> "Chem3DRequest":
+        if not self.smiles and not self.mol:
+            raise ValueError("at least one of smiles or mol must be provided")
+        return self
+
+
+class Chem3DResponse(BaseModel):
+    ok: bool
+    canonical_smiles: Optional[str]
+    molblock_3d: Optional[str]
+    qc: QCResult
+
+
 class TaskSource(BaseModel):
     smiles: Optional[str]
     mol: Optional[str]
@@ -86,6 +112,8 @@ class Task(BaseModel):
     title: str
     status: TaskStatus = TaskStatus.NEW
     source: TaskSource
+    claimed_by: Optional[str] = None
+    claimed_at: Optional[datetime] = None
     annotation: Optional[Annotation] = None
     review: Optional[Review] = None
     context: TaskContext = Field(default_factory=TaskContext)
@@ -104,11 +132,39 @@ class TaskCreateRequest(BaseModel):
 class ClaimRequest(BaseModel):
     user: str
 
+    @field_validator("user", mode="before")
+    @classmethod
+    def strip_user(cls, value: str) -> str:
+        if isinstance(value, str):
+            return value.strip()
+        return value
+
+    @field_validator("user")
+    @classmethod
+    def user_required(cls, value: str) -> str:
+        if not value:
+            raise ValueError("user is required")
+        return value
+
 
 class SubmitRequest(BaseModel):
     annotator: str
     smiles: Optional[str] = None
     mol: Optional[str] = None
+
+    @field_validator("annotator", mode="before")
+    @classmethod
+    def strip_annotator(cls, value: str) -> str:
+        if isinstance(value, str):
+            return value.strip()
+        return value
+
+    @field_validator("annotator")
+    @classmethod
+    def annotator_required(cls, value: str) -> str:
+        if not value:
+            raise ValueError("annotator is required")
+        return value
 
     @field_validator("smiles", "mol", mode="before")
     @classmethod
@@ -128,7 +184,23 @@ class SubmitRequest(BaseModel):
 class ReviewRequest(BaseModel):
     reviewer: str
     decision: TaskStatus
-    comment: Optional[str]
+    comment: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def normalize_input(cls, data):
+        if isinstance(data, dict):
+            # 兼容旧前端可能传的 status 字段
+            if "decision" not in data and "status" in data:
+                data = {**data, "decision": data["status"]}
+        return data
+
+    @field_validator("decision", mode="before")
+    @classmethod
+    def normalize_decision(cls, value):
+        if isinstance(value, str):
+            return value.strip().upper()
+        return value
 
     @field_validator("decision")
     @classmethod

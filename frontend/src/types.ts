@@ -28,11 +28,20 @@ export interface Review {
   reviewed_at: string;
 }
 
+export interface TaskContext {
+  ph?: number | null;
+  solvent?: string | null;
+  temperature?: number | null;
+}
+
 export interface Task {
   id: string;
   title: string;
   status: TaskStatus;
   source: SourcePayload;
+  claimed_by?: string | null;
+  claimed_at?: string | null;
   annotation?: Annotation | null;
   review?: Review | null;
+  context?: TaskContext;
 }
